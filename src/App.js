@@ -69,6 +69,7 @@ class App extends Component {
       activeNode: "",
       rawLinks,
       projectsData,
+      haslibs: false,
       uichild: [],
       showCreateDialog: false
     }
@@ -284,13 +285,25 @@ class App extends Component {
           &nbsp; &nbsp;
           {this.state.active >= 0 ? (
             <Card>
-              <Button
-                class="copy-button"
-                variant="primary"
-                onClick={this._copyJsonToClipboard}
-              >
-                Copy to clipboard
-              </Button>
+              {this.state.projects[this.state.activeNode].length > 0 ? (
+                <Button
+                  class="copy-button"
+                  variant="primary"
+                  onClick={this._copyJsonToClipboard}
+                >
+                  Copy to clipboard
+                </Button>
+              ) : (
+                <Button
+                  class="copy-button"
+                  variant="primary"
+                  onClick={this._copyJsonToClipboard}
+                  disabled
+                >
+                  Copy to clipboard
+                </Button>
+              )}
+
               <Card.Body>
                 <ListGroup>
                   {this.state.projects[this.state.activeNode].map(e => {
