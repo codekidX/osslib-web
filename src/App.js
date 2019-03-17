@@ -182,8 +182,19 @@ class App extends Component {
 
   addRepo(path) {
     fetch("https://api.github.com/repos/" + path)
-      .then(res => res.json())
-      .then(info => this.saveRepo(info))
+      .then(res => {
+        if (res.status === 404) {
+          return undefined
+        }
+        return res.json()
+      })
+      .then(info => {
+        if (info === undefined) {
+          this.showAlertWith("ERROR: Repository does not exist.", "danger")
+          return
+        }
+        this.saveRepo(info)
+      })
   }
 
   removeRepo(name) {
