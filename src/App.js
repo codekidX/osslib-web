@@ -240,11 +240,7 @@ class App extends Component {
                 <Button variant="success" onClick={this._addClicked}>
                   Add
                 </Button>
-                &nbsp;
-                <Button variant="danger" onClick={this._addClicked}>
-                  Remove
-                </Button>
-                &nbsp;
+                &nbsp; &nbsp;
                 <Button
                   variant="outline-primary"
                   onClick={() => this._dialogShow()}
