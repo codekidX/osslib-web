@@ -95,15 +95,15 @@ class App extends Component {
 
   _addClicked = () => {
     if (this.state.active < 0) {
-      this.showErrorWith("Select or Create a new project")
+      this.showAlertWith("Select or Create a new project", "danger")
       return
     }
 
     if (this.projectPath === "") {
-      this.showErrorWith("Empty project path")
+      this.showAlertWith("Empty project path", "danger")
     } else {
       if (this.projectPath.split("/").length !== 2) {
-        this.showErrorWith("Not a valid project path for githubs")
+        this.showAlertWith("Not a valid project path for githubs", "danger")
       } else {
         let exists = this.state.projects[this.state.activeNode].some(
           element => {
@@ -111,7 +111,7 @@ class App extends Component {
           }
         )
         if (exists) {
-          this.showErrorWith("Already using this library")
+          this.showAlertWith("Already using this library", "danger")
           return
         }
         this.addRepo(this.projectPath)
@@ -120,9 +120,9 @@ class App extends Component {
     }
   }
 
-  showErrorWith(msg) {
+  showAlertWith(msg, type) {
     this.setState({
-      uichild: [...this.state.uichild, msg]
+      uichild: [...this.state.uichild, { msg, type }]
     })
 
     setTimeout(() => {
@@ -150,6 +150,7 @@ class App extends Component {
     document.body.appendChild(textField)
     textField.select()
     document.execCommand("copy")
+    this.showAlertWith("Copied !", "info")
     textField.remove()
   }
 
@@ -264,8 +265,8 @@ class App extends Component {
           <br />
           {this.state.uichild.map((e, idx) => {
             return (
-              <Alert dismissable="true" variant="danger">
-                {e}
+              <Alert dismissable="true" variant={e.type}>
+                {e.msg}
               </Alert>
             )
           })}
