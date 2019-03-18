@@ -214,8 +214,8 @@ class App extends Component {
       {
         headers: { "content-type": "text/plain" }
       }
-    ).then(async readme => {
-      let txt = await readme.text()
+    ).then(async res => {
+      let txt = res.status === 404 ? "" : await res.text()
       let lib = {
         name: ghinfo.full_name,
         description: ghinfo.description,
