@@ -216,12 +216,15 @@ class App extends Component {
       }
     ).then(async res => {
       let txt = res.status === 404 ? "" : await res.text()
+      let licenseRes = await fetch(ghinfo.license.url)
+      let licenseBody = await licenseRes.json()
       let lib = {
         name: ghinfo.full_name,
         description: ghinfo.description,
         creator: ghinfo.owner.login,
         license: ghinfo.license,
-        readme: txt
+        readme: txt,
+        license_exp: licenseBody.body
       }
 
       let projects = this.state.projects
