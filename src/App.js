@@ -310,10 +310,19 @@ class App extends Component {
               <Card.Body>
                 <ListGroup>
                   {this.state.projects[this.state.activeNode].map(e => {
+                    let repoUrl = `https://github.com/${e.name}`
                     return (
                       <ListGroup.Item>
                         <Row style={{ textAlign: "center" }}>
-                          <Col>{e.name}</Col>
+                          <Col>
+                            <a
+                              rel="noopener noreferrer"
+                              target="_blank"
+                              href={repoUrl}
+                            >
+                              {e.name}
+                            </a>
+                          </Col>
                           <Col>
                             <Button
                               variant="danger"
