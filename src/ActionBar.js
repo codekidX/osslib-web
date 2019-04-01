@@ -1,4 +1,4 @@
-import { React, Component } from "react"
+import React, { Component } from "react"
 import {
   Form,
   Navbar,
@@ -9,7 +9,8 @@ import {
   FormControl
 } from "react-bootstrap"
 
-export class ActionBar extends Component {
+class ActionBar extends Component {
+
   render() {
     return (
       <div className="ActionBar">
@@ -25,16 +26,16 @@ export class ActionBar extends Component {
                 placeholder="Project"
                 aria-label="Username"
                 aria-describedby="basic-addon1"
-                onChange={this._projectPathChanged}
+                onChange={this.props._projectPathChanged}
               />
               &nbsp;
-              <Button variant="success" onClick={this._addClicked}>
+              <Button variant="success" onClick={this.props._addClicked}>
                 Add
               </Button>
               &nbsp; &nbsp;
               <Button
                 variant="outline-primary"
-                onClick={() => this._dialogShow()}
+                onClick={() => this.props._dialogShow()}
               >
                 Create
               </Button>
@@ -42,11 +43,11 @@ export class ActionBar extends Component {
           </Form>
           <DropdownButton
             id="dropdown-basic-button"
-            title={this.state.ddTitle}
+            title={this.props.ddTitle}
             onClick={this._projectDropdownClicked}
           >
-            {Object.keys(this.state.projects).map((e, i, array) => (
-              <Dropdown.Item onSelect={() => this._ddItemClicked(e, i)}>
+            {Object.keys(this.props.projects).map((e, i, array) => (
+              <Dropdown.Item onSelect={() => this.props._ddItemClicked(e, i)}>
                 {e}
               </Dropdown.Item>
             ))}
@@ -56,3 +57,5 @@ export class ActionBar extends Component {
     )
   }
 }
+
+export default ActionBar

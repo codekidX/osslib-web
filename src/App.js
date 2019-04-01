@@ -3,15 +3,10 @@ import ActionBar from "./ActionBar"
 import {
   Alert,
   Card,
-  Form,
-  Navbar,
   Button,
-  Dropdown,
-  DropdownButton,
   Col,
   Container,
   ListGroup,
-  InputGroup,
   FormControl,
   Modal,
   Row
@@ -60,9 +55,10 @@ class App extends Component {
       rawLinks = []
     }
 
+    this._copyJsonToClipboard = this._copyJsonToClipboard.bind(this)
+    // this.showAlertWith = this.showAlertWith.bind(this)
     this._ddItemClicked = this._ddItemClicked.bind(this)
     this._addClicked = this._addClicked.bind(this)
-    this._copyJsonToClipboard = this._copyJsonToClipboard.bind(this)
 
     this.state = {
       projects,
@@ -87,12 +83,24 @@ class App extends Component {
     localStorage.setItem("pd", JSON.stringify(this.state.projectsData))
   }
 
-  _ddItemClicked = (value, index) => {
+  showAlertWith(msg, type) {
     this.setState({
-      active: index,
-      activeNode: value,
-      ddTitle: value
+      uichild: [...this.state.uichild, { msg, type }]
     })
+
+    setTimeout(() => {
+      let cloneUiChild = this.state.uichild
+      cloneUiChild.pop()
+      this.setState({ uichild: cloneUiChild })
+    }, 2000)
+  }
+
+  _dialogClose = () => {
+    this.setState({ showCreateDialog: false })
+  }
+
+  _dialogShow = () => {
+    this.setState({ showCreateDialog: true })
   }
 
   _addClicked = () => {
@@ -122,24 +130,12 @@ class App extends Component {
     }
   }
 
-  showAlertWith(msg, type) {
+  _ddItemClicked = (value, index) => {
     this.setState({
-      uichild: [...this.state.uichild, { msg, type }]
+      active: index,
+      activeNode: value,
+      ddTitle: value
     })
-
-    setTimeout(() => {
-      let cloneUiChild = this.state.uichild
-      cloneUiChild.pop()
-      this.setState({ uichild: cloneUiChild })
-    }, 2000)
-  }
-
-  _dialogClose = () => {
-    this.setState({ showCreateDialog: false })
-  }
-
-  _dialogShow = () => {
-    this.setState({ showCreateDialog: true })
   }
 
   _copyJsonToClipboard = () => {
@@ -239,7 +235,15 @@ class App extends Component {
     return (
       <div className="App" class="container-fluid">
         <Container>
-          <ActionBar />
+          <ActionBar
+            _projectPathChanged={this._projectPathChanged}
+            _dialogShow={this._dialogShow}
+            _addClicked={this._addClicked}
+            _ddItemClicked={this._ddItemClicked}
+            active={this.state.active}
+            projects={this.state.projects}
+            ddTitle={this.state.ddTitle}
+          />
           <br />
           {this.state.uichild.map((e, idx) => {
             return (
