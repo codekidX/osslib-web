@@ -31,6 +31,7 @@ class App extends Component {
      * }
      */
     let projects = localStorage.getItem("projects")
+    let credits = localStorage.getItem("credits")
     let projectsData = localStorage.getItem("pd")
     let rawLinks = localStorage.getItem("rawlinks")
 
@@ -40,13 +41,20 @@ class App extends Component {
       projectsData = empty
     }
 
-    console.log("render is called")
     if (projects == null) {
       let empty = {}
       localStorage.setItem("projects", JSON.stringify(empty))
       projects = {}
     } else {
       projects = JSON.parse(projects)
+    }
+
+    if (credits == null) {
+      let empty = {}
+      localStorage.setItem("credits", JSON.stringify(empty))
+      credits = {}
+    } else {
+      credits = JSON.parse(credits)
     }
 
     if (rawLinks == null) {
@@ -61,6 +69,7 @@ class App extends Component {
     this._addClicked = this._addClicked.bind(this)
 
     this.state = {
+      credits,
       projects,
       active: -1,
       activeNode: "",
@@ -140,11 +149,11 @@ class App extends Component {
 
   _copyJsonToClipboard = () => {
     var textField = document.createElement("textarea")
-    textField.innerText = JSON.stringify(
-      this.state.projects[this.state.activeNode],
-      null,
-      2
-    )
+    var osslJson = {
+      projects: this.state.projects[this.state.activeNode],
+      credits: this.state.credits[this.state.activeNode]
+    }
+    textField.innerText = JSON.stringify(osslJson, null, 2)
     document.body.appendChild(textField)
     textField.select()
     document.execCommand("copy")
