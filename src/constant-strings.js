@@ -1,0 +1,1 @@
+export const summary = `The data to your project configs are storaged locally and does not go to any external api.`

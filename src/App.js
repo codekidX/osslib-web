@@ -12,6 +12,7 @@ import {
   Row
 } from "react-bootstrap"
 import "./App.css"
+import { summary } from "./constant-strings";
 
 class App extends Component {
   inputName = ""
@@ -262,6 +263,7 @@ class App extends Component {
             )
           })}
           &nbsp; &nbsp;
+          <p>{summary}</p>
           {this.state.active >= 0 ? (
             <Card>
               {this.state.projects[this.state.activeNode].length > 0 ? (
