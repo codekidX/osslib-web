@@ -6,3 +6,8 @@
   float: right;
   position: absolute;
 }
+
+.summary {
+  color: white;
+  text-align: center;
+}
