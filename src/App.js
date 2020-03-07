@@ -222,16 +222,21 @@ class App extends Component {
         headers: { "content-type": "text/plain" }
       }
     ).then(async res => {
+      let licenseRes, licenseBody
+
       let txt = res.status === 404 ? "" : await res.text()
-      let licenseRes = await fetch(ghinfo.license.url)
-      let licenseBody = await licenseRes.json()
+
+      if (ghinfo.license.url) {
+        licenseRes = await fetch(ghinfo.license.url)
+        licenseBody = await licenseRes.json()
+      }
       let lib = {
         name: ghinfo.full_name,
         description: ghinfo.description,
         creator: ghinfo.owner.login,
         license: ghinfo.license,
         readme: txt,
-        license_exp: licenseBody.body
+        license_exp: ghinfo.license.url ? licenseBody.body : ""
       }
 
       let projects = this.state.projects
